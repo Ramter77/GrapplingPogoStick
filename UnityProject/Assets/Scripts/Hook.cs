@@ -2,8 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 public class Hook : MonoBehaviour {
+	public bool VR;
+
+	public Hand leftHand, rightHand;
 	public GameObject hook;
 	public GameObject hookHolder;
 
@@ -18,11 +23,37 @@ public class Hook : MonoBehaviour {
 	private float currentDistance;
     private bool grounded;
 
+	private void Start() {
+		if (!leftHand) {
+			leftHand = GetComponentInChildren<Hand>();
+		}
+		if (!rightHand) {
+			rightHand = GetComponentInChildren<Hand>();
+		}
+	}
+
     void Update()
 	{
 		//Input
-		if (Input.GetMouseButtonDown(0) && !fired) {
-			fired = true;
+		if (!VR) {
+			if (Input.GetMouseButtonDown(0)) {
+				if (!fired) {
+					fired = true;
+				}
+			}
+		}
+
+		else {
+			bool trigger1 = SteamVR_Input._default.inActions.GrabPinch.GetState(leftHand.handType);
+			bool trigger2 = SteamVR_Input._default.inActions.GrabPinch.GetState(rightHand.handType);
+
+			//Debug.Log("LeftHand: "+trigger1 + "RightHand: "+trigger2);
+			//VR input
+			if (!fired) {
+				if (trigger1 || trigger2) {
+					fired = true;
+				}
+			}
 		}
 
 		if (fired) {
@@ -33,10 +64,17 @@ public class Hook : MonoBehaviour {
 		}
 
 		if (fired && !hooked) {
+			
+
 			//Move player
 			hook.transform.Translate(Vector3.forward * Time.deltaTime * hookTravelSpeed);
 			currentDistance = Vector3.Distance(transform.position, hook.transform.position);
 		
+
+
+			Debug.Log("dfsknj000 " + hook);
+
+
 			if (currentDistance >= maxDistance) {
 				ReturnHook();
 			}

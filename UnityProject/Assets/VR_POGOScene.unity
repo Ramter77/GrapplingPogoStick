@@ -172,6 +172,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabAsset: 0
@@ -323,6 +327,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1262111328832692, guid: c58f5c6d6adcc60478750620d1fba139, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c58f5c6d6adcc60478750620d1fba139, type: 2}
   m_IsPrefabAsset: 0
@@ -347,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a024c5c4f172034c81667d475bd1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VR: 1
   hook: {fileID: 989518557}
   hookHolder: {fileID: 989518556}
   hookTravelSpeed: 15
@@ -354,6 +363,21 @@ MonoBehaviour:
   hooked: 0
   hookedObject: {fileID: 0}
   maxDistance: 20
+--- !u!54 &664307034
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664307027}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &962195781
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a024c5c4f172034c81667d475bd1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VR: 0
   hook: {fileID: 1071719005}
   hookHolder: {fileID: 979008774}
   hookTravelSpeed: 15
@@ -682,7 +707,7 @@ GameObject:
   - component: {fileID: 1668359620}
   - component: {fileID: 1668359619}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
