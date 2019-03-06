@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: ff954cf980b74d84faef92e9773d56a6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: M_FridgeBox_BottomLeft_80s
+    100004: M_FridgeBox_BottomRight_80s
+    100006: M_FridgeBoxes_80s
+    100008: M_FridgeDoor_Bottom_80s
+    100010: M_FridgeDoor_Bottom_Body_80s
+    100012: M_FridgeDoor_Bottom_Handle_80s
+    100014: M_FridgeDoor_BottomInside_Box_80s
+    100016: M_FridgeDoor_Top_80s
+    100018: M_FridgeDoor_Top_Body_80s
+    100020: M_FridgeDoor_Top_Handle_80s
+    100022: U_FridgeDrawer_1_80s
+    100024: U_FridgeDrawer_2_80s
+    100026: U_FridgeDrawer_3_80s
+    100028: U_FridgeDrawer_4_80s
+    100030: U_FridgeDrawers_80s
+    100032: U_MainFridge_80s
+    400000: //RootNode
+    400002: M_FridgeBox_BottomLeft_80s
+    400004: M_FridgeBox_BottomRight_80s
+    400006: M_FridgeBoxes_80s
+    400008: M_FridgeDoor_Bottom_80s
+    400010: M_FridgeDoor_Bottom_Body_80s
+    400012: M_FridgeDoor_Bottom_Handle_80s
+    400014: M_FridgeDoor_BottomInside_Box_80s
+    400016: M_FridgeDoor_Top_80s
+    400018: M_FridgeDoor_Top_Body_80s
+    400020: M_FridgeDoor_Top_Handle_80s
+    400022: U_FridgeDrawer_1_80s
+    400024: U_FridgeDrawer_2_80s
+    400026: U_FridgeDrawer_3_80s
+    400028: U_FridgeDrawer_4_80s
+    400030: U_FridgeDrawers_80s
+    400032: U_MainFridge_80s
+    2100000: lambert4
+    2100002: lambert3
+    2100004: lambert6
+    2100006: lambert5
+    2100008: lambert2
+    2300000: M_FridgeBox_BottomLeft_80s
+    2300002: M_FridgeBox_BottomRight_80s
+    2300004: M_FridgeDoor_Bottom_Body_80s
+    2300006: M_FridgeDoor_Bottom_Handle_80s
+    2300008: M_FridgeDoor_BottomInside_Box_80s
+    2300010: M_FridgeDoor_Top_Body_80s
+    2300012: M_FridgeDoor_Top_Handle_80s
+    2300014: U_FridgeDrawer_1_80s
+    2300016: U_FridgeDrawer_2_80s
+    2300018: U_FridgeDrawer_3_80s
+    2300020: U_FridgeDrawer_4_80s
+    2300022: U_MainFridge_80s
+    3300000: M_FridgeBox_BottomLeft_80s
+    3300002: M_FridgeBox_BottomRight_80s
+    3300004: M_FridgeDoor_Bottom_Body_80s
+    3300006: M_FridgeDoor_Bottom_Handle_80s
+    3300008: M_FridgeDoor_BottomInside_Box_80s
+    3300010: M_FridgeDoor_Top_Body_80s
+    3300012: M_FridgeDoor_Top_Handle_80s
+    3300014: U_FridgeDrawer_1_80s
+    3300016: U_FridgeDrawer_2_80s
+    3300018: U_FridgeDrawer_3_80s
+    3300020: U_FridgeDrawer_4_80s
+    3300022: U_MainFridge_80s
+    4300000: U_MainFridge_80s
+    4300002: M_FridgeDoor_BottomInside_Box_80s
+    4300004: M_FridgeDoor_Bottom_Body_80s
+    4300006: M_FridgeDoor_Bottom_Handle_80s
+    4300008: U_FridgeDrawer_1_80s
+    4300010: U_FridgeDrawer_2_80s
+    4300012: U_FridgeDrawer_3_80s
+    4300014: U_FridgeDrawer_4_80s
+    4300016: M_FridgeBox_BottomLeft_80s
+    4300018: M_FridgeBox_BottomRight_80s
+    4300020: M_FridgeDoor_Top_Body_80s
+    4300022: M_FridgeDoor_Top_Handle_80s
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 0d5fb166a5d6cc24bb70a27c01f9652e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3
+    second: {fileID: 2100000, guid: cafc9f026244fa94f97a8cfd35aeeac0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert4
+    second: {fileID: 2100000, guid: 3a21982a534c14c44bd1b07505135528, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert5
+    second: {fileID: 2100000, guid: 9e755072796a711408c240b9839b8620, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert6
+    second: {fileID: 2100000, guid: 9de30eb310593824cba03df47c041206, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

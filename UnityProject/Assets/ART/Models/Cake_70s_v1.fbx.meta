@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: f2cd060347b584741b17f63ad7a5b82e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: P_CakePlate_70s
+    100004: P_CakeSlice_10_70s
+    100006: P_CakeSlice_1_70s
+    100008: P_CakeSlice_2_70s1
+    100010: P_CakeSlice_3_70s
+    100012: P_CakeSlice_4_70s
+    100014: P_CakeSlice_5_70s
+    100016: P_CakeSlice_6_70s
+    100018: P_CakeSlice_7_70s
+    100020: P_CakeSlice_8_70s
+    100022: P_CakeSlice_9_70s
+    400000: //RootNode
+    400002: P_CakePlate_70s
+    400004: P_CakeSlice_10_70s
+    400006: P_CakeSlice_1_70s
+    400008: P_CakeSlice_2_70s1
+    400010: P_CakeSlice_3_70s
+    400012: P_CakeSlice_4_70s
+    400014: P_CakeSlice_5_70s
+    400016: P_CakeSlice_6_70s
+    400018: P_CakeSlice_7_70s
+    400020: P_CakeSlice_8_70s
+    400022: P_CakeSlice_9_70s
+    2100000: CakePlateTexture
+    2100002: CakePiece_Texture
+    2300000: P_CakePlate_70s
+    2300002: P_CakeSlice_10_70s
+    2300004: P_CakeSlice_1_70s
+    2300006: P_CakeSlice_2_70s1
+    2300008: P_CakeSlice_3_70s
+    2300010: P_CakeSlice_4_70s
+    2300012: P_CakeSlice_5_70s
+    2300014: P_CakeSlice_6_70s
+    2300016: P_CakeSlice_7_70s
+    2300018: P_CakeSlice_8_70s
+    2300020: P_CakeSlice_9_70s
+    3300000: P_CakePlate_70s
+    3300002: P_CakeSlice_10_70s
+    3300004: P_CakeSlice_1_70s
+    3300006: P_CakeSlice_2_70s1
+    3300008: P_CakeSlice_3_70s
+    3300010: P_CakeSlice_4_70s
+    3300012: P_CakeSlice_5_70s
+    3300014: P_CakeSlice_6_70s
+    3300016: P_CakeSlice_7_70s
+    3300018: P_CakeSlice_8_70s
+    3300020: P_CakeSlice_9_70s
+    4300000: P_CakePlate_70s
+    4300002: P_CakeSlice_1_70s
+    4300004: P_CakeSlice_5_70s
+    4300006: P_CakeSlice_2_70s1
+    4300008: P_CakeSlice_3_70s
+    4300010: P_CakeSlice_4_70s
+    4300012: P_CakeSlice_6_70s
+    4300014: P_CakeSlice_7_70s
+    4300016: P_CakeSlice_8_70s
+    4300018: P_CakeSlice_10_70s
+    4300020: P_CakeSlice_9_70s
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CakePiece_Texture
+    second: {fileID: 2100000, guid: e5c00084c028c1042bd6af59d8cfc050, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CakePlateTexture
+    second: {fileID: 2100000, guid: 32715cb9f941df34290887cced0ad773, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
