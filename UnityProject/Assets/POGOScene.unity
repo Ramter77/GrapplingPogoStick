@@ -542,13 +542,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a024c5c4f172034c81667d475bd1ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hook: {fileID: 1071719005}
+  enable_VR: 0
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
   hookHolder: {fileID: 979008774}
-  hookTravelSpeed: 15
-  playerTravelSpeed: 10
+  hook: {fileID: 1071719005}
+  maxHookTravelSpeed: 15
+  maxHookTravelDistance: 10
   hooked: 0
   hookedObject: {fileID: 0}
-  maxDistance: 20
+  maxPlayerTravelSpeed: 20
+  minDistanceToDestination: 1
 --- !u!1 &1505179072
 GameObject:
   m_ObjectHideFlags: 0

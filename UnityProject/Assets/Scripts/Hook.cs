@@ -6,46 +6,80 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 
 public class Hook : MonoBehaviour {
-	public bool VR;
-
+	#region Variables
+	#region VR variables
+	[Header ("VR")]
+	public bool enable_VR;
 	public Hand leftHand, rightHand;
-	public GameObject hook;
+	private bool trigger1, trigger2;
+	#endregion
+
+	#region Hook variables
+	[Header ("Hook")]
 	public GameObject hookHolder;
+	public GameObject hook;
+	private LineRenderer rope;
+	public float maxHookTravelSpeed;
+	private float currentDistanceToHook;
+	public float maxHookTravelDistance;
 
-	public float hookTravelSpeed;
-	public float playerTravelSpeed;
-
+	//Private control
 	public static bool fired;
 	public bool hooked;
 	public GameObject hookedObject;
+	#endregion
 
-	public float maxDistance;
-	private float currentDistance;
-    private bool grounded;
+	#region Player variables
+	[Header ("Player")]
+	public float maxPlayerTravelSpeed;
+	[Tooltip ("Player is stopped when he is this amount of units away from his destination (hooked object)")]
+    public float minDistanceToDestination = 1f;
+	private bool grounded, reachedDestination;
+	private float distanceToHook;
+	private Rigidbody rb;
+	#endregion
+	#endregion
 
-	private void Start() {
+    #region Start
+    private void Start() {
 		if (!leftHand) {
 			leftHand = GetComponentInChildren<Hand>();
 		}
 		if (!rightHand) {
 			rightHand = GetComponentInChildren<Hand>();
 		}
+
+		rb = GetComponent<Rigidbody>();
+
+		if (!hook) {
+			hook = GameObject.FindObjectOfType<HookDetector>().gameObject;
+		}
+
+		if (!rope) {
+			rope = hook.GetComponent<LineRenderer>();
+		}
 	}
+	#endregion
 
     void Update()
 	{
+		#region Input
 		//Input
-		if (!VR) {
-			if (Input.GetMouseButtonDown(0)) {
+		if (!enable_VR) {
+			if (Input.GetKey(KeyCode.Mouse0)) {
 				if (!fired) {
 					fired = true;
 				}
 			}
+			else {
+				fired = false;
+				ReturnHook();
+			}
 		}
 
 		else {
-			bool trigger1 = SteamVR_Input._default.inActions.GrabPinch.GetState(leftHand.handType);
-			bool trigger2 = SteamVR_Input._default.inActions.GrabPinch.GetState(rightHand.handType);
+			trigger1 = SteamVR_Input._default.inActions.GrabPinch.GetState(leftHand.handType);
+			trigger2 = SteamVR_Input._default.inActions.GrabPinch.GetState(rightHand.handType);
 
 			//Debug.Log("LeftHand: "+trigger1 + "RightHand: "+trigger2);
 			//VR input
@@ -55,77 +89,98 @@ public class Hook : MonoBehaviour {
 				}
 			}
 		}
+		#endregion
 
+		#region Throw grapple
 		if (fired) {
+			//Draw a line from start to end point
+			#region Draw Rope
 			LineRenderer rope = hook.GetComponent<LineRenderer>();
 			rope.SetVertexCount(2);
 			rope.SetPosition(0, hookHolder.transform.position);
 			rope.SetPosition(1, hook.transform.position);
-		}
+			#endregion
 
-		if (fired && !hooked) {
-			
+			if (!hooked) {
+				Debug.Log("Fired !hooked: " + hooked);
 
-			//Move player
-			hook.transform.Translate(Vector3.forward * Time.deltaTime * hookTravelSpeed);
-			currentDistance = Vector3.Distance(transform.position, hook.transform.position);
-		
-
-
-			Debug.Log("dfsknj000 " + hook);
-
-
-			if (currentDistance >= maxDistance) {
-				ReturnHook();
-			}
-		}
-
-		if (fired && hooked) {
-			hook.transform.parent = hookedObject.transform.parent;
-			transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * playerTravelSpeed);
-			float distanceToHook = Vector3.Distance(transform.position, hook.transform.position);
-		
-			GetComponent<Rigidbody>().useGravity = false;
-
-			if (distanceToHook < 1) {
-				//ReturnHook();
-
-				if (!grounded) {
-					transform.Translate(Vector3.forward * Time.deltaTime * 7f);
-					transform.Translate(Vector3.up * Time.deltaTime * 10f);
+				#region Throw Hook
+				hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+				currentDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
+				
+				//Return hook if it travels too far
+				if (currentDistanceToHook >= maxHookTravelDistance) {
+					ReturnHook();
 				}
+				#endregion
+			}
 
-				StartCoroutine(Climb());
+			else if (hooked) {
+				Debug.Log("Fired hooked: " + hooked);
+
+				//Disable gravity
+				rb.useGravity = false;
+
+				//If player close to destination set reachedDestination to true
+				distanceToHook = Vector3.Distance(transform.position, hook.transform.position);
+				if (distanceToHook < minDistanceToDestination) {
+					reachedDestination = true;
+					//StartCoroutine(ReturnHookWithDelay(0.1f));
+
+					//!Optional: pull up to surface that was grappled
+					if (!grounded) {
+						//transform.Translate(Vector3.forward * Time.deltaTime * 7f);
+						//transform.Translate(Vector3.up * Time.deltaTime * 10f);
+					}
+				}
+				else {
+					#region Parent Hook to hooked Object & Move Player to Hook
+					//if (!reachedDestination) {
+						hook.transform.parent = hookedObject.transform.parent;
+						transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * maxPlayerTravelSpeed);
+						
+					//}
+					#endregion
+				}
 			}
 		}
+
 		else {
+			//NO INPUT: Reparent hook to hookHolder & use gravity
 			hook.transform.parent = hookHolder.transform;
-			GetComponent<Rigidbody>().useGravity = true;
+			rb.useGravity = true;
 		}
+		#endregion
 	}
 
-    IEnumerator Climb()
+	#region ReturnHookWithDelay
+    IEnumerator ReturnHookWithDelay(float delay)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(delay);
 		ReturnHook();
     }
+	#endregion
 
+	#region ReturnHook
     private void ReturnHook()
     {
+		//Reset values
         hook.transform.position = hookHolder.transform.position;
 		hook.transform.rotation = hookHolder.transform.rotation;
 		fired = false;
 		hooked = false;
+		reachedDestination = false;
 
-		LineRenderer rope = hook.GetComponent<LineRenderer>();
+		//Hide rope
 		rope.SetVertexCount(0);
     }
+	#endregion
 
+	#region CheckGrounded 
 	private void CheckGrounded() {
 		RaycastHit hit;
-		float distance = 1f;
-
 		Vector3 dir = new Vector3(0, -1);
+		float distance = 1f;
 
 		if (Physics.Raycast(transform.position, dir, out hit, distance)) {
 			grounded = true;
@@ -134,4 +189,5 @@ public class Hook : MonoBehaviour {
 			grounded = false;
 		}
 	}
+	#endregion
 }
