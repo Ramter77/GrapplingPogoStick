@@ -10,8 +10,8 @@ public class Hook : MonoBehaviour {
 	#region VR variables
 	[Header ("VR")]
 	public bool enable_VR;
-	public Hand leftHand, rightHand;
-	private bool trigger1, trigger2;
+	public Hand hand;
+	private bool trigger;
 	#endregion
 
 	#region Hook variables
@@ -20,7 +20,6 @@ public class Hook : MonoBehaviour {
 	public GameObject hook;
 	private LineRenderer rope;
 	public float maxHookTravelSpeed;
-	private float currentDistanceToHook;
 	public float maxHookTravelDistance;
 
 	//Private control
@@ -33,23 +32,20 @@ public class Hook : MonoBehaviour {
 	[Header ("Player")]
 	public float maxPlayerTravelSpeed;
 	[Tooltip ("Player is stopped when he is this amount of units away from his destination (hooked object)")]
-    public float minDistanceToDestination = 1f;
+    public float minPlayerDistanceToDestination = 1f;
 	private bool grounded, reachedDestination;
-	private float distanceToHook;
-	private Rigidbody rb;
+	private float currentPlayerDistanceToHook, playerDistanceToHook;
+	private Rigidbody playerRB;
 	#endregion
 	#endregion
 
     #region Start
     private void Start() {
-		if (!leftHand) {
-			leftHand = GetComponentInChildren<Hand>();
-		}
-		if (!rightHand) {
-			rightHand = GetComponentInChildren<Hand>();
+		if (!hand) {
+			hand = GetComponentInChildren<Hand>();
 		}
 
-		rb = GetComponent<Rigidbody>();
+		playerRB = GetComponent<Rigidbody>();
 
 		if (!hook) {
 			hook = GameObject.FindObjectOfType<HookDetector>().gameObject;
@@ -78,13 +74,12 @@ public class Hook : MonoBehaviour {
 		}
 
 		else {
-			trigger1 = SteamVR_Input._default.inActions.GrabPinch.GetState(leftHand.handType);
-			trigger2 = SteamVR_Input._default.inActions.GrabPinch.GetState(rightHand.handType);
+			trigger = SteamVR_Input._default.inActions.GrabPinch.GetState(hand.handType);
 
 			//Debug.Log("LeftHand: "+trigger1 + "RightHand: "+trigger2);
 			//VR input
 			if (!fired) {
-				if (trigger1 || trigger2) {
+				if (trigger) {
 					fired = true;
 				}
 			}
@@ -106,10 +101,10 @@ public class Hook : MonoBehaviour {
 
 				#region Throw Hook
 				hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
-				currentDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
+				currentPlayerDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
 				
 				//Return hook if it travels too far
-				if (currentDistanceToHook >= maxHookTravelDistance) {
+				if (currentPlayerDistanceToHook >= maxHookTravelDistance) {
 					ReturnHook();
 				}
 				#endregion
@@ -119,11 +114,11 @@ public class Hook : MonoBehaviour {
 				Debug.Log("Fired hooked: " + hooked);
 
 				//Disable gravity
-				rb.useGravity = false;
+				playerRB.useGravity = false;
 
 				//If player close to destination set reachedDestination to true
-				distanceToHook = Vector3.Distance(transform.position, hook.transform.position);
-				if (distanceToHook < minDistanceToDestination) {
+				playerDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
+				if (playerDistanceToHook < minPlayerDistanceToDestination) {
 					reachedDestination = true;
 					//StartCoroutine(ReturnHookWithDelay(0.1f));
 
@@ -137,8 +132,7 @@ public class Hook : MonoBehaviour {
 					#region Parent Hook to hooked Object & Move Player to Hook
 					//if (!reachedDestination) {
 						hook.transform.parent = hookedObject.transform.parent;
-						transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * maxPlayerTravelSpeed);
-						
+						transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * maxPlayerTravelSpeed);	
 					//}
 					#endregion
 				}
@@ -148,7 +142,7 @@ public class Hook : MonoBehaviour {
 		else {
 			//NO INPUT: Reparent hook to hookHolder & use gravity
 			hook.transform.parent = hookHolder.transform;
-			rb.useGravity = true;
+			playerRB.useGravity = true;
 		}
 		#endregion
 	}

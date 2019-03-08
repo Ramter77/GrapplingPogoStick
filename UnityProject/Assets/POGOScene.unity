@@ -552,7 +552,7 @@ MonoBehaviour:
   hooked: 0
   hookedObject: {fileID: 0}
   maxPlayerTravelSpeed: 20
-  minDistanceToDestination: 1
+  minDistanceToDestination: 2
 --- !u!1 &1505179072
 GameObject:
   m_ObjectHideFlags: 0

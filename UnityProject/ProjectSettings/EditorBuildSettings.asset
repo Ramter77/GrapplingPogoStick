@@ -6,15 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/70s.unity
-    guid: 944ec4c269cc27f42a985546a142bac9
-  - enabled: 1
-    path: Assets/80s.unity
-    guid: 07d393f6f51603d4085164533c10b5ec
-  - enabled: 1
-    path: Assets/2010s.unity
-    guid: b47052035fdc7e346929f3cd2b669f26
-  - enabled: 1
-    path: Assets/2020.unity
-    guid: e39fbaebc92328c4db827ec26d392fb3
+    path: Assets/VR_POGOScene.unity
+    guid: bff68294372a1a64893857bab00203ae
   m_configObjects: {}

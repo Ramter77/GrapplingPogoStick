@@ -100,8 +100,8 @@ public class Movement : MonoBehaviour
 
         if (move2.x != 0 && move2.y != 0)
         {
-
-            MoveSound();
+            //Todo: only play sound when grounded
+            //MoveSound();
         }
 
         /*  if (move) {            
