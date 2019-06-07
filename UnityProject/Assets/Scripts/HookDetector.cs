@@ -13,7 +13,7 @@ public class HookDetector : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.tag == "Hookable") {
+		if (other.gameObject.layer == 30) {
 			player.GetComponent<Hook>().hooked = true;
 			player.GetComponent<Hook>().hookedObject = other.gameObject;
 		}

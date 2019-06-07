@@ -19,8 +19,9 @@ public class Hook : MonoBehaviour {
 	public GameObject hookHolder;
 	public GameObject hook;
 	private LineRenderer rope;
-	public float maxHookTravelSpeed;
-	public float maxHookTravelDistance;
+	public float maxHookTravelSpeed = 15;
+	public float maxHookTravelDistance = 10;
+	public float returnSpeed = 10;
 
 	//Private control
 	public static bool fired;
@@ -30,14 +31,20 @@ public class Hook : MonoBehaviour {
 
 	#region Player variables
 	[Header ("Player")]
-	public float maxPlayerTravelSpeed;
+	public float maxPlayerTravelSpeed = 20;
 	[Tooltip ("Player is stopped when he is this amount of units away from his destination (hooked object)")]
     public float minPlayerDistanceToDestination = 1f;
 	private bool grounded, reachedDestination;
 	private float currentPlayerDistanceToHook, playerDistanceToHook;
 	private Rigidbody playerRB;
-	#endregion
-	#endregion
+    private bool returning;
+    private bool rayHit;
+    private Vector3 pos;
+    private bool moving;
+    public LayerMask layerMask;
+
+    #endregion
+    #endregion
 
     #region Start
     private void Start() {
@@ -57,20 +64,35 @@ public class Hook : MonoBehaviour {
 	}
 	#endregion
 
+	void DrawRope() {
+		//Draw a line from start to end point
+		#region Draw Rope
+		LineRenderer rope = hook.GetComponent<LineRenderer>();
+		rope.SetVertexCount(2);
+		rope.SetPosition(0, hookHolder.transform.position);
+		rope.SetPosition(1, hook.transform.position);
+		#endregion
+	}
+
     void Update()
 	{
 		#region Input
 		//Input
 		if (!enable_VR) {
-			if (Input.GetKey(KeyCode.Mouse0)) {
-				if (!fired) {
-					fired = true;
+			
+				if (Input.GetKey(KeyCode.Mouse0)) {
+					if (!fired && !returning) {
+						if (Input.GetKeyDown(KeyCode.Mouse0)) {
+							fired = true;
+							rayHit = false;
+						}
+					}
 				}
-			}
-			else {
-				fired = false;
-				ReturnHook();
-			}
+				else {
+					fired = false;
+					ReturnHook();
+				}
+			
 		}
 
 		else {
@@ -86,21 +108,60 @@ public class Hook : MonoBehaviour {
 		}
 		#endregion
 
+		if (returning) {
+			ReturnHook();
+			DrawRope();
+		}
+		else
+		{
+			if (fired && moving) {
+				hook.transform.position = Vector3.MoveTowards(hook.transform.position, pos, Time.deltaTime * maxHookTravelSpeed);
+			}
+		}
+
 		#region Throw grapple
 		if (fired) {
-			//Draw a line from start to end point
-			#region Draw Rope
-			LineRenderer rope = hook.GetComponent<LineRenderer>();
-			rope.SetVertexCount(2);
-			rope.SetPosition(0, hookHolder.transform.position);
-			rope.SetPosition(1, hook.transform.position);
-			#endregion
+			DrawRope();
+
+			hook.transform.parent = null;
 
 			if (!hooked) {
 				Debug.Log("Fired !hooked: " + hooked);
 
 				#region Throw Hook
-				hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+				//hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+
+
+				RaycastHit hit;
+				// Does the ray intersect any objects excluding the player layer
+				if (!rayHit && !moving) {
+					if (Physics.Raycast(hookHolder.transform.position, hookHolder.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+					{
+						if (!moving && !returning && !rayHit) {
+						rayHit = true;
+						pos = hit.point;
+						//hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+
+						moving = true;
+						}
+						
+
+						//hook.GetComponent<Rigidbody>().AddForce(pos - hook.transform.position, ForceMode.Impulse);
+					}
+				else
+				{
+					hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+					//rayHit = false;
+					//hook.transform.position = Vector3.MoveTowards(hook.transform.position, pos, maxHookTravelDistance);
+					Debug.Log("EAFKEUABZfkziizzhiz");
+					//hook.transform.Translate(Vector3.forward * Time.deltaTime * maxHookTravelSpeed);
+
+					//ReturnHook();
+					//hook.transform.position = hookHolder.transform.position;
+				}
+				}
+				
+				//hook.transform.position = Vector3.MoveTowards(hook.transform.position, );
 				currentPlayerDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
 				
 				//Return hook if it travels too far
@@ -114,7 +175,7 @@ public class Hook : MonoBehaviour {
 				Debug.Log("Fired hooked: " + hooked);
 
 				//Disable gravity
-				playerRB.useGravity = false;
+				//playerRB.useGravity = false;
 
 				//If player close to destination set reachedDestination to true
 				playerDistanceToHook = Vector3.Distance(transform.position, hook.transform.position);
@@ -132,7 +193,8 @@ public class Hook : MonoBehaviour {
 					#region Parent Hook to hooked Object & Move Player to Hook
 					//if (!reachedDestination) {
 						hook.transform.parent = hookedObject.transform.parent;
-						transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * maxPlayerTravelSpeed);	
+						playerRB.AddForce((hook.transform.position-hookHolder.transform.position).normalized * Time.deltaTime * maxPlayerTravelSpeed, ForceMode.Impulse);
+						//transform.position = Vector3.MoveTowards(transform.position, hook.transform.position, Time.deltaTime * maxPlayerTravelSpeed);	
 					//}
 					#endregion
 				}
@@ -158,15 +220,28 @@ public class Hook : MonoBehaviour {
 	#region ReturnHook
     private void ReturnHook()
     {
-		//Reset values
-        hook.transform.position = hookHolder.transform.position;
-		hook.transform.rotation = hookHolder.transform.rotation;
-		fired = false;
-		hooked = false;
-		reachedDestination = false;
+		returning = true;
+		if (returning) {
+			//Reset values
+			//hook.transform.position = hookHolder.transform.position;
+			float step =  returnSpeed * Time.deltaTime; // calculate distance to move
+			hook.transform.position = Vector3.MoveTowards(hook.transform.position, hookHolder.transform.position, step);
+			//ansform.position = Vector3.MoveTowards(transform.position, target.position, step);
+			hook.transform.rotation = hookHolder.transform.rotation;
 
-		//Hide rope
-		rope.SetVertexCount(0);
+			if (hook.transform.position == hookHolder.transform.position) {
+				returning = false;
+				fired = false;
+				hooked = false;
+				reachedDestination = false;
+				moving = false;
+
+				hook.transform.parent = hookHolder.transform;
+
+				//Hide rope
+				rope.SetVertexCount(0);
+			}
+		}
     }
 	#endregion
 
@@ -184,4 +259,8 @@ public class Hook : MonoBehaviour {
 		}
 	}
 	#endregion
+
+	private void OnDrawGizmos() {
+		Debug.DrawRay(hookHolder.transform.position, hookHolder.transform.TransformDirection(Vector3.forward) * maxHookTravelDistance, Color.red);
+	}
 }
