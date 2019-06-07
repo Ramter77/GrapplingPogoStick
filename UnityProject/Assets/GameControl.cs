@@ -26,6 +26,7 @@ public class GameControl : MonoBehaviour {
 				if ( timer <= 0 )
 				{
 					//GameOver();
+					ended = true;
 					Debug.Log("LOST");
 				}
 				else
@@ -37,10 +38,15 @@ public class GameControl : MonoBehaviour {
 		}
 		else
 		{
-			if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit")) {
+			if (Input.GetKeyDown(KeyCode.Space)) {
 				Scene loadedLevel = SceneManager.GetActiveScene();
 				SceneManager.LoadScene(loadedLevel.buildIndex);
 			}
+		}
+
+		if (Input.GetButtonDown("Submit")) {
+			Scene loadedLevel = SceneManager.GetActiveScene();
+				SceneManager.LoadScene(loadedLevel.buildIndex);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
