@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/VR_POGOScene.unity
     guid: bff68294372a1a64893857bab00203ae
+  - enabled: 1
+    path: Assets/POGOScene.unity
+    guid: a1682599096835f43aeaba8eb03cf65f
   m_configObjects: {}

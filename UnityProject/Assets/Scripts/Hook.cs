@@ -79,20 +79,18 @@ public class Hook : MonoBehaviour {
 		#region Input
 		//Input
 		if (!enable_VR) {
-			
-				if (Input.GetKey(KeyCode.Mouse0)) {
-					if (!fired && !returning) {
-						if (Input.GetKeyDown(KeyCode.Mouse0)) {
-							fired = true;
-							rayHit = false;
-						}
+			if (Input.GetKey(KeyCode.Mouse0)) {
+				if (!fired && !returning) {
+					if (Input.GetKeyDown(KeyCode.Mouse0)) {
+						fired = true;
+						rayHit = false;
 					}
 				}
-				else {
-					fired = false;
-					ReturnHook();
-				}
-			
+			}
+			else {
+				fired = false;
+				ReturnHook();
+			}
 		}
 
 		else {

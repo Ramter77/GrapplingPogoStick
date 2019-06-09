@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -78,6 +79,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float maxVelocity = 10f;
         public LayerMask layerMask;
         public GameControl gm;
+        public PostProcessVolume m_Volume;
+        public float postProcessSmoothing = 0.1f;
+
+
 
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
@@ -128,6 +133,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (gm == null) {
                 gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameControl>();
             }
+
+            if (m_Volume == null) {
+                m_Volume = GetComponent<PostProcessVolume>();
+            }
         }
 
 
@@ -168,7 +177,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                 if (m_IsGrounded)
                 {
+                    Time.timeScale = 1f;
                     m_RigidBody.drag = 1f;
+
+                    movementSettings.ForwardSpeed = 15f;
+                    movementSettings.BackwardSpeed = 5f;
+                    movementSettings.StrafeSpeed = 10f;
+
+
+                    //maxVelocity = 5f;
+                    //Mathf.Lerp(m_RigidBody.velocity.magnitude, maxVelocity, 0.5f);
 
                     if (m_Jump)
                     {
@@ -185,6 +203,26 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
                 else
                 {
+                    //! ADDED SLOWMO TO HOLDING JUMPING BUTTON WHEN IN THE AIR
+                    if (CrossPlatformInputManager.GetButton("Jump"))
+                    {
+                        if (CrossPlatformInputManager.GetButtonDown("Jump")) {
+                            Time.timeScale = 0.4F;
+                        }
+                    }
+                    else
+                    {
+                        Time.timeScale = 1f;
+                    }
+
+                    movementSettings.ForwardSpeed = 30f;
+                    movementSettings.BackwardSpeed = 10f;
+                    movementSettings.StrafeSpeed = 20f;
+
+                    /* maxVelocity = 15f;
+                    Mathf.Lerp(m_RigidBody.velocity.magnitude, maxVelocity, 0.1f); */
+                    
+
                     m_RigidBody.drag = 0f;
                     if (m_PreviouslyGrounded && !m_Jumping)
                     {
@@ -194,7 +232,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Jump = false;
 
 
-                m_RigidBody.velocity = Vector3.ClampMagnitude(m_RigidBody.velocity, maxVelocity);
+                m_RigidBody.velocity = Vector3.ClampMagnitude(m_RigidBody.velocity, maxVelocity);                
+                m_Volume.weight = Mathf.Lerp(m_Volume.weight, Mathf.Clamp01(m_RigidBody.velocity.magnitude/maxVelocity), postProcessSmoothing);
             }
             else
             {
